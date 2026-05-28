@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Feed - Readsmith{% endblock %}
+{% block body %}
+<main class="settings-main narrow">
+  {% match feed %}
+  {% when Some with (f) %}
+  <h1>Edit feed</h1>
+  <form method="post" action="/feeds/{{ f.id }}" class="stack-form">
+    <label>Title <input name="title" value="{{ f.title }}"></label>
+    <label>Feed URL <input name="feed_url" value="{{ f.feed_url }}"></label>
+    <label>Site URL <input name="site_url" value="{{ f.site_url }}"></label>
+    <label>Description <textarea name="description">{{ f.description }}</textarea></label>
+    <label>Group
+      <select name="group_id">
+        {% for group in groups %}
+          <option value="{{ group.id }}" {% if group.id == f.group_id %}selected{% endif %}>{{ group.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="checkbox"><input type="checkbox" name="suspended" {% if f.suspended == 1 %}checked{% endif %}> Suspended</label>
+    <button type="submit">Save</button>
+  </form>
+  {% when None %}
+  <h1>New feed</h1>
+  <form method="post" action="/feeds" class="stack-form">
+    <label>Title <input name="title"></label>
+    <label>Feed or site URL <input name="feed_url" required></label>
+    <label>Site URL <input name="site_url"></label>
+    <label>Description <textarea name="description"></textarea></label>
+    <label>Group
+      <select name="group_id">
+        {% for group in groups %}
+          <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit">Create</button>
+  </form>
+  {% endmatch %}
+  <p><a href="/feeds">Back to feeds</a></p>
+</main>
+{% endblock %}

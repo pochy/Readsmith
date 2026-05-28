@@ -1,0 +1,6 @@
+{% if items.len() == 0 %}
+  <div class="empty-state">No articles</div>
+{% endif %}
+{% for item in items %}
+  {% include "partials/article_card.html" %}
+{% endfor %}

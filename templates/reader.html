@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}{{ title }} - Readsmith{% endblock %}
+{% block body %}
+<div class="app-shell">
+  {% include "partials/sidebar.html" %}
+  <main class="reader-main">
+    <section class="article-list" id="article-list">
+      <div class="toolbar">
+        <h1>{{ title }}</h1>
+        <form method="post" action="/items/mark-all-read" hx-post="/items/mark-all-read" hx-target="body">
+          <button type="submit">Mark all read</button>
+        </form>
+      </div>
+      {% include "partials/article_list.html" %}
+    </section>
+    <section class="article-detail" id="article-detail">
+      <div class="empty-state">Select an article</div>
+    </section>
+  </main>
+</div>
+{% endblock %}

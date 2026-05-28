@@ -1,0 +1,15 @@
+<article class="article-body">
+  <header>
+    <h1>{{ item.title }}</h1>
+    <div class="article-actions">
+      <a class="button" href="{{ item.link }}" rel="noopener noreferrer" target="_blank">Open original</a>
+      {% if bookmarked %}
+        <form method="post" action="/items/{{ item.id }}/unbookmark"><button type="submit">Unstar</button></form>
+      {% else %}
+        <form method="post" action="/items/{{ item.id }}/bookmark"><button type="submit">Star</button></form>
+      {% endif %}
+      <form method="post" action="/items/{{ item.id }}/unread"><button type="submit">Mark unread</button></form>
+    </div>
+  </header>
+  <div class="content">{{ item.content|safe }}</div>
+</article>

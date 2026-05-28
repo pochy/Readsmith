@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Search - Readsmith{% endblock %}
+{% block body %}
+<div class="app-shell">
+  {% include "partials/sidebar.html" %}
+  <main class="reader-main single-pane">
+    <section class="article-list">
+      <div class="toolbar">
+        <h1>Search</h1>
+        <form method="get" action="/search" class="search-form">
+          <input type="search" name="q" value="{{ q }}" placeholder="Search articles">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      {% include "partials/article_list.html" %}
+    </section>
+  </main>
+</div>
+{% endblock %}

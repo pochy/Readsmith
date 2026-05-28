@@ -1,0 +1,13 @@
+{% for group in groups %}
+  <div class="group-block">
+    <div class="group-name">{{ group.name }}</div>
+    {% for feed in feeds %}
+      {% if feed.group_id == group.id %}
+      <div class="feed-row">
+        <span>{{ feed.title }}</span>
+        {% if feed.unread_count > 0 %}<span class="badge">{{ feed.unread_count }}</span>{% endif %}
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endfor %}

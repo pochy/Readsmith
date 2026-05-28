@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Groups - Readsmith{% endblock %}
+{% block body %}
+<div class="settings-main narrow">
+  <div class="toolbar">
+    <h1>Groups</h1>
+    <a class="button" href="/unread">Back</a>
+  </div>
+  <form method="post" action="/groups" class="inline-form">
+    <input name="name" placeholder="Group name">
+    <button type="submit">Create</button>
+  </form>
+  <table>
+    <tbody>
+    {% for group in groups %}
+      <tr>
+        <td>
+          <form method="post" action="/groups/{{ group.id }}" class="inline-form">
+            <input name="name" value="{{ group.name }}">
+            <button type="submit">Save</button>
+          </form>
+        </td>
+        <td>
+          {% if group.id != 1 %}
+          <form method="post" action="/groups/{{ group.id }}/delete"><button type="submit">Delete</button></form>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

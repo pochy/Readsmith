@@ -1,0 +1,20 @@
+<aside class="sidebar">
+  <div class="brand"><a href="/unread">Readsmith</a></div>
+  <form method="get" action="/search" class="sidebar-search">
+    <input type="search" name="q" placeholder="Search">
+  </form>
+  <nav class="nav">
+    <a class="{% if active == "all" %}active{% endif %}" href="/all">All</a>
+    <a class="{% if active == "unread" %}active{% endif %}" href="/unread">Unread</a>
+    <a class="{% if active == "starred" %}active{% endif %}" href="/starred">Starred</a>
+  </nav>
+  <div class="sidebar-section">
+    <div class="sidebar-heading">Feeds</div>
+    {% include "partials/feed_tree.html" %}
+  </div>
+  <nav class="nav bottom">
+    <a href="/feeds">Manage feeds</a>
+    <a href="/groups">Manage groups</a>
+    <form method="post" action="/logout"><button type="submit" class="link-button">Logout</button></form>
+  </nav>
+</aside>

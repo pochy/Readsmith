@@ -1,0 +1,18 @@
+<article class="article-card {% if item.unread == 1 %}unread{% endif %}" id="item-{{ item.id }}">
+  <a href="/items/{{ item.id }}" hx-get="/items/{{ item.id }}" hx-target="#article-detail" hx-swap="innerHTML">
+    <div class="article-title">{{ item.title }}</div>
+    <div class="article-meta">{{ item.feed_title }}{% if item.author != "" %} · {{ item.author }}{% endif %}</div>
+  </a>
+  <div class="card-actions">
+    {% if item.unread == 1 %}
+      <form method="post" action="/items/{{ item.id }}/read"><button type="submit">Read</button></form>
+    {% else %}
+      <form method="post" action="/items/{{ item.id }}/unread"><button type="submit">Unread</button></form>
+    {% endif %}
+    {% if item.bookmarked == 1 %}
+      <form method="post" action="/items/{{ item.id }}/unbookmark"><button type="submit">Unstar</button></form>
+    {% else %}
+      <form method="post" action="/items/{{ item.id }}/bookmark"><button type="submit">Star</button></form>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Feeds - Readsmith{% endblock %}
+{% block body %}
+<div class="app-shell">
+  {% include "partials/sidebar.html" %}
+  <main class="settings-main">
+    <div class="toolbar">
+      <h1>Feeds</h1>
+      <a class="button" href="/feeds/new">New feed</a>
+    </div>
+    <form method="post" action="/opml/import" enctype="multipart/form-data" class="inline-form">
+      <input type="file" name="opml" accept=".opml,.xml,text/xml">
+      <button type="submit">Import OPML</button>
+      <a class="button muted-button" href="/opml/export">Export OPML</a>
+    </form>
+    <table>
+      <thead><tr><th>Feed</th><th>Group</th><th>Unread</th><th>Actions</th></tr></thead>
+      <tbody>
+      {% for feed in feeds %}
+        <tr>
+          <td><a href="{{ feed.site_url }}">{{ feed.title }}</a><div class="muted">{{ feed.feed_url }}</div></td>
+          <td>{{ feed.group_name }}</td>
+          <td>{{ feed.unread_count }}</td>
+          <td class="row-actions">
+            <form method="post" action="/feeds/{{ feed.id }}/refresh"><button type="submit">Refresh</button></form>
+            <a class="button" href="/feeds/{{ feed.id }}/edit">Edit</a>
+            <form method="post" action="/feeds/{{ feed.id }}/delete"><button type="submit">Delete</button></form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</div>
+{% endblock %}
