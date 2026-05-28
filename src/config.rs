@@ -1,4 +1,4 @@
-use std::{env, time::Duration};
+use std::{env, path::PathBuf, time::Duration};
 
 #[derive(Debug, Clone)]
 pub struct Config {
@@ -20,6 +20,7 @@ pub struct Config {
 
 impl Config {
     pub fn from_env() -> anyhow::Result<Self> {
+        let _ = dotenvy::dotenv();
         let password = env::var("APP_PASSWORD").ok().filter(|v| !v.is_empty());
         let allow_empty_password = bool_env("APP_ALLOW_EMPTY_PASSWORD", false);
         if password.is_none() && !allow_empty_password {
@@ -71,4 +72,12 @@ fn usize_env(key: &str, default: usize) -> usize {
         .ok()
         .and_then(|v| v.parse().ok())
         .unwrap_or(default)
+}
+
+pub fn sqlite_database_parent(database_url: &str) -> Option<PathBuf> {
+    let path = database_url.strip_prefix("sqlite:")?;
+    if path.is_empty() || path == ":memory:" {
+        return None;
+    }
+    PathBuf::from(path).parent().map(|parent| parent.to_path_buf())
 }

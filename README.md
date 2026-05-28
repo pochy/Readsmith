@@ -404,7 +404,7 @@ GET  /healthz
 APP_HOST=0.0.0.0
 APP_PORT=8080
 
-DATABASE_URL=sqlite:/data/rss-reader.db
+DATABASE_URL=sqlite:data/readsmith.db
 
 APP_PASSWORD=change-me
 APP_ALLOW_EMPTY_PASSWORD=false
@@ -486,6 +486,8 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    environment:
+      DATABASE_URL: sqlite:/data/readsmith.db
     volumes:
       - ./data:/data
     restart: unless-stopped

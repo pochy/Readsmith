@@ -1,4 +1,9 @@
-use readsmith::{app, config::Config, db::migration, services::pull_worker};
+use readsmith::{
+    app,
+    config::{Config, sqlite_database_parent},
+    db::migration,
+    services::pull_worker,
+};
 use sqlx::sqlite::{SqliteConnectOptions, SqlitePoolOptions};
 use std::str::FromStr;
 use tokio::net::TcpListener;
@@ -14,6 +19,9 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let config = Config::from_env()?;
+    if let Some(parent) = sqlite_database_parent(&config.database_url) {
+        tokio::fs::create_dir_all(parent).await?;
+    }
     let connect_options =
         SqliteConnectOptions::from_str(&config.database_url)?.create_if_missing(true);
     let pool = SqlitePoolOptions::new()

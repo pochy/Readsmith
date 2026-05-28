@@ -1823,6 +1823,7 @@ dependencies = [
  "axum",
  "base64",
  "bytes",
+ "dotenvy",
  "feed-rs",
  "futures",
  "hmac",
